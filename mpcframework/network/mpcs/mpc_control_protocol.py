@@ -5,8 +5,8 @@ from .mpcs_authentication_protocol import MPCSAuthenticationProtocol
 from .mpc_outsourcing_network import OutsourcingServer
 
 logger = logging.getLogger('MPCControlProtocol')
-BASE_IN_PORT = 1270  # used for clients' connections
-BASE_OUT_PORT = 1260  # used for verifiers' connections
+BASE_IN_PORT = 1270  # used for input (source) clients' connections
+BASE_OUT_PORT = 1260  # used for output (consumer) clients' connections
 
 
 class MPCControlProtocol(MPCSAuthenticationProtocol):
