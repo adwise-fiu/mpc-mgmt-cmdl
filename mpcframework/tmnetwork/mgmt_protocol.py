@@ -85,7 +85,8 @@ class ManagementProtocol(AuthenticationProtocol):
 
     def collectDataSize(self, msg):
         logger.debug('received metadata from {}'.format(self.remotenode.name))
-        if jobId := msg.pop('job-id', ''):
+        jobId = msg.pop('job-id', '')
+        if jobId:
             current_job = self.factory.current_jobs[jobId]
             if self.remotenode.name in current_job['sources']:
                 current_job['source_params'][self.remotenode.name] = msg
@@ -104,7 +105,8 @@ class ManagementProtocol(AuthenticationProtocol):
 
     def collectMpcRequestAck(self, msg):
         logger.debug('received response to MPC request from {}'.format(self.remotenode.name))
-        if jobId := msg.pop('job-id', ''):
+        jobId = msg.pop('job-id', '')
+        if jobId:
             current_job = self.factory.current_jobs[jobId]
             if self.remotenode.name in current_job['mpcs']:
                 available = msg.pop('available', False)
@@ -147,7 +149,8 @@ class ManagementProtocol(AuthenticationProtocol):
 
     def processMpcAckResponse(self, msg):
         logger.debug('received MPC configuration response from {}'.format(self.remotenode.name))
-        if jobId := msg.pop('job-id', ''):
+        jobId = msg.pop('job-id', '')
+        if jobId:
             current_job = self.factory.current_jobs[jobId]
             if current_job['requester']['name'] != self.remotenode.name:
                 logger.warning('{} is NOT the requester of MPC job: {}!!!'
@@ -264,7 +267,8 @@ class ManagementProtocol(AuthenticationProtocol):
 
     def updateParticipantStatus(self, msg):
         logger.debug('received status message from {}'.format(self.remotenode.name))
-        if jobId := msg.pop('job-id', ''):
+        jobId = msg.pop('job-id', '')
+        if jobId:
             if msg.get('status', '') == 'setup-ready':
                 current_job = self.factory.current_jobs[jobId]
                 key = 'pending_' + self.remotenode.role.lower()  # TODO add the s as in clients?

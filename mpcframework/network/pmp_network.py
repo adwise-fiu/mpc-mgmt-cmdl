@@ -31,7 +31,8 @@ class PmpNetwork:
         while len(self.connections) < nconnections:
             events = self._sel.select(timeout=None)
             for key, mask in events:
-                if (data := key.data).id not in registeredIds:
+                data = key.data
+                if data.id not in registeredIds:
                     msg = data.channel.receiveData()
                     if msg.get('result', '') == 'ok':
                         self.connections[data.id] = data.channel

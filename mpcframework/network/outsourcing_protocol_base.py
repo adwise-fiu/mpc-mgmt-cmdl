@@ -31,16 +31,17 @@ class OutsourcingProtocolBase(basic.NetstringReceiver):
         if self.authenticated:
             pass
         elif self.secureconn:
-            if msg := self._decryptMessage(bstring):
-                if self.remotename == msg['nodename']:
-                    self.sendData({'result': 'ok'})
-                    self.authenticated = True
-                    logger.info('established secure communication channel with {}'.format(self.remotename))
+            msg = self._decryptMessage(bstring)
+            if msg and self.remotename == msg['nodename']:
+                self.sendData({'result': 'ok'})
+                self.authenticated = True
+                logger.info('established secure communication channel with {}'.format(self.remotename))
         else:
             self._setupSecureChannel(bstring)  # the first message should be the service ticket
 
     def _decryptMessage(self, bstring):
-        if not (bstring := self.aes_cipher.decrypt(bstring)):
+        bstring = self.aes_cipher.decrypt(bstring)
+        if not bstring:
             return b''
         return self._unpackMessage(bstring)
 
@@ -56,10 +57,12 @@ class OutsourcingProtocolBase(basic.NetstringReceiver):
     def _setupSecureChannel(self, bstring):
         logger.debug('received service ticket from {}'.format(self.remoteaddr))
         cipher = AES_cipher(self.srvr_identity['symm_k'], iv=self.srvr_identity['nonce'])
-        if not (payload := cipher.decrypt(bstring)):
+        payload = cipher.decrypt(bstring)
+        if not payload:
             return
         # configure a secure communication channgel using the credentials in the ticket
-        if not (ticket := self._unpackMessage(payload)):
+        ticket = self._unpackMessage(payload)
+        if not ticket:
             return
         if self.remoterole != ticket['role']:
             logger.warning('invalid node type for communicating using {}'.format(self.__class__.__name__))

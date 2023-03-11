@@ -26,7 +26,8 @@ class NetworkProtocolBase:
         logger.debug('sending connection request to {} server at {}'
                     .format(self.remotetype, self.serv_addr_str)
         )
-        if status := self.mysocket.connect_ex(self.serveraddr):
+        status = self.mysocket.connect_ex(self.serveraddr)
+        if status:
             logger.error('could not connect to {} server at {}'.format(self.remotetype, self.serv_addr_str))
         else:
             logger.info('connected to {} server at {}'.format(self.remotetype, self.serv_addr_str))

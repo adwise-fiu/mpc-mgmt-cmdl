@@ -77,7 +77,8 @@ class MPCRequestProtocol(ClientAuthenticationProtocol):
                 logger.info('metadata sent')
 
             elif descriptor == 'credentials':
-                if jobId := msg.get('job-id', ''):
+                jobId = msg.get('job-id', '')
+                if jobId:
                     try:
                         current_job = self.jobs[jobId] = {
                             'n-mpcs': msg['n-mpcs'],
