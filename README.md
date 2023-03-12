@@ -7,7 +7,7 @@ We offer a comprehensive framework instantiating a proposed set of protocols for
   <img src="https://github.com/ogbautista/mpc-mgmt-cmdl/blob/main/MPC_system_architecture.png" width="580">
 </p>
 
-
+---
 ## Table of Contents
 
 1. [Python Dependencies](#1-python-dependencies)
@@ -90,7 +90,10 @@ $ export CFLAGS="-I$(brew --prefix openssl)/include $CFLAGS"
 $ export LDFLAGS="-L$(brew --prefix openssl)/lib $LDFLAGS"
 ```
 
+---
 ## 2. Running the Program
+
+*Note*: Tested with python version as low as 3.5.
 
 Run the MPC management server and participant programs as a Python module. Navigate to the project's base directory, then type:
 
@@ -129,6 +132,7 @@ In the case of a non-existing client, it will provide the user with an applicati
 
 ```
 python3 -m mpcframework.client 5
+could not find stored credentials
 > register
 ```
 
@@ -177,12 +181,12 @@ Configuration found in `./mpcframework/tmnetwork/`, files `regs_protocol.py` and
 * TCP port for data input: 1270
 * TCP port for reporting results: 1260
 
-Configuration foun in `./mpcframework/network/mpcs/mpc_control_protocol.py`
+Configuration found in `./mpcframework/network/mpcs/mpc_control_protocol.py`
 
 
 #### MPC Management Server
 
-The only server IP address participants need to know is the MPC management server IP, which also carries out the participant registration. The IP address specification is done in files located at `./mpcframework/network/` as follows:
+The only server IP address participants need to know is the MPC management server IP, which also carries out the participant registration. The IP address specification is done in files located in the folder `./mpcframework/network/` as follows:
 
 * To contact the registration server, replace `'localhost'` for the corresponding MPC management server IP in line 13 of `network_protocol_base.py`
 
