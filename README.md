@@ -10,15 +10,15 @@ We offer a comprehensive framework instantiating a proposed set of protocols for
 
 ## Table of Contents
 
-1. [Python Dependencies](#python-dependencies)
+1. [Python Dependencies](#1-python-dependencies)
 
-2. [Running the Program](#running-the-program)
+2. [Running the Program](#2-running-the-program)
 
-   2.1. [Registering Participants](#registering-participants)
+   2.1. [Registering Participants](#21-registering-participants)
 
-   2.2. [Setting up the MPC Network](#setting-up-the-mpc-network)
+   2.2. [Setting up the MPC Network](#22-setting-up-the-mpc-network)
 
-   2.3. [Running on Different Hosts](#running-on-different-hosts)
+   2.3. [Running on Different Hosts](#23-running-on-different-hosts)
 
 
 ## 1. Python Dependencies
