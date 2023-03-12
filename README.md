@@ -1,24 +1,27 @@
 # MPC Management Framework
-MPC management framework for automated setup of a secure network for participants of multiparty computation in the outsourced setting.
+MPC management framework automating a secure network setup among participants of multiparty computation in the outsourced setting.
 
 We offer a comprehensive framework instantiating a proposed set of protocols for *participant registration* (i.e., client or server), *Kerberos-like authentication*, and *MPC job orchestration*. This framework suits the need of organizations that wants to set up their MPC system while temporarily incorporating computation power from other stakeholders or third parties.
 
-![MPC System in the Outsourced Setting](https://github.com/ogbautista/mpc-mgmt-cmdl/blob/main/MPC_system_architecture.png)
+<p align="center">
+  <img src="https://github.com/ogbautista/mpc-mgmt-cmdl/blob/main/MPC_system_architecture.png" width="580">
+</p>
+
 
 ## Table of Contents
+
 1. [Python Dependencies](#python-dependencies)
 
 2. [Running the Program](#running-the-program)
 
-&emsp; &ensp; 2.1. [Registering Participants](#registering-participants)
+   2.1. [Registering Participants](#registering-participants)
 
-&emsp; &ensp; 2.2. [Setting up the MPC Network](#setting-up-the-mpc-network)
+   2.2. [Setting up the MPC Network](#setting-up-the-mpc-network)
 
-&emsp; &ensp; 2.3 [Running on Different Hosts](#running-on-different-hosts)
+   2.3. [Running on Different Hosts](#running-on-different-hosts)
 
 
-
-## Python Dependencies
+## 1. Python Dependencies
 
 ### Installing Build Tools
 
@@ -59,28 +62,35 @@ Install the above python dependencies using `pip` (or `pip3` depending on your s
 ***Notes:***
 
 
-1. During the installation of `ed25519` you may get an error related to a `#include "Python.h"`. In such case, depending on your linux system, use:
+1. During the installation of `ed25519` you may get an error related to `#include "Python.h"`. In such case, install the python3 header files depending on your system as follows.
 
+Debian-based systems:
 ```shell
 sudo apt-get install python3-dev
 ```
-or
-
+RHEL-based systems:
 ```shell
 sudo yum install python3-devel
 ```
 
-2. During the installation of `scrypt` you may get an error related to a `#include <openssl/aes.h>`. In such case, depending on your linux system, use:
+2. During the installation of `scrypt` you may get an error related to `#include <openssl/aes.h>`. In such case, install `openssl` depending on your linux system as follows.
 
+Debian-based systems:
 ```shell
 sudo apt-get install libssl-dev
 ```
-or
+RHEL-based systems:
 ```shell
 sudo yum install openssl-devel
 ```
+or for OS X with brew:
+```shell
+$ brew install openssl
+$ export CFLAGS="-I$(brew --prefix openssl)/include $CFLAGS"
+$ export LDFLAGS="-L$(brew --prefix openssl)/lib $LDFLAGS"
+```
 
-## Running the Program
+## 2. Running the Program
 
 Run the MPC management server and participant programs as a Python module. Navigate to the project's base directory, then type:
 
@@ -102,7 +112,7 @@ python3 -m mpcframework.mpcs
 python3 -m mpcframework.client
 ```
 
-### Registering Participants
+### 2.1. Registering Participants
 
 First, run the MPC management server.
 
@@ -127,7 +137,7 @@ If the client is registered as a consumer client, the program will provide anoth
 To register a client as a (data) consumer client, prior to running the program, go to the file `./mpcframework/network/client/client_registration_protocol.py` and change the value of the variable `iotype` from `input` to `output`, meaning that this client should receive the output of a secure computation.
 
 
-### Setting Up the MPC Network
+### 2.2. Setting Up the MPC Network
 
 Once there are enough MPC servers, at least one source client and at least one consumer client authenticated with the MPC management server, the system is ready to receive requests for a secure computation from a consumer client.
 
@@ -136,7 +146,7 @@ To run and authenticate a client with the MPC management server, simply run it i
 On the consumer client console, type `register` and press ENTER.
 
 ```
-Analytics001> runmpc
+analytics001> runmpc
 ```
 
 This will trigger the automated MPC network setup. You can see the outcome of the execution on the MPC management server's console.
@@ -144,7 +154,7 @@ This will trigger the automated MPC network setup. You can see the outcome of th
 Note that this program sets up the MPC network between MPC servers and clients. The actual MPC protocol execution would require adding the corresponding MPC protocol to the MPC servers and integrating it with the `MpcControlProtocol` class.
 
 
-### Running on Different Hosts
+### 2.3. Running on Different Hosts
 
 The following configurations need to be considered when deploying the MPC management framework on different hosts:
 
