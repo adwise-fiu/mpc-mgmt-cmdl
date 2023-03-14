@@ -16,12 +16,6 @@ class MPCControlProtocol(MPCSAuthenticationProtocol):
         self.identity = args[0]
         self.currentJobId = ''
         self.ioserver = None
-        # this is needed when multiple parties run in the same host
-        # try:
-        #     self.port_offset = int(args[0]['nodename'][-3:])
-        # except ValueError:
-        #     self.port_offset = 0
-        self.port_offset = 0
         self.mpc_ntwk_set = dict()
 
     def authenticate(self):
@@ -49,10 +43,7 @@ class MPCControlProtocol(MPCSAuthenticationProtocol):
                     })
                 else:
                     self.currentJobId = jobId
-                    self.ioserver = OutsourcingServer(self.identity,
-                                                      BASE_IN_PORT+self.port_offset,
-                                                      BASE_OUT_PORT+self.port_offset
-                    )
+                    self.ioserver = OutsourcingServer(self.identity, BASE_IN_PORT, BASE_OUT_PORT)
                     self.ioserver.start()
 
                     response.update({

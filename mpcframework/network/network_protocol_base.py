@@ -80,29 +80,6 @@ class NetworkProtocolBase:
             logger.warning('invalid byte-string formatting: ' + '\n' + str(bstring))
         return {}
 
-    # First version
-    # def receiveData(self, binary=False):
-    #     bstring = self.mysocket.recv(MAX_PKT_LENGTH)
-    #     if not bstring:
-    #         logger.warning('empty response from coordination server')
-    #     elif b':' in bstring and bstring.endswith(b','):
-    #         bstring = (bstring.split(b':', 1)[1]).rstrip(b',')
-    #         if self.secureconn:
-    #             bstring = self.aes_cipher.decrypt(bstring)
-    #         if not binary:
-    #             head = bstring[0]
-    #             # TODO: may need to add an argument to bypass this when receiving encrypted messages
-    #             if (head >= 128 and head <= 143) or head == 222:  # Check for packed dict
-    #                 try:
-    #                     return msgpack.loads(bstring)
-    #                 except Exception as e:
-    #                     logger.error('error unpacking received data: ' + str(e))
-    #                     logger.debug('data:\n' + str(bstring))
-    #         return bstring
-    #     else:
-    #         logger.warning('invalid byte-string formatting: ' + '\n' + str(bstring))
-    #     return {}
-
     def setupSymmCipher(self, smk, iv):  # This method only used during registration
         # setting up AES cipher with CBC mode by default
         self.aes_cipher = AES_cipher(smk, iv=iv)

@@ -64,7 +64,7 @@ class OutsourcingServer(threading.Thread):
             else:
                 logger.debug('could not open port {}, trying with the next one'.format(self.inport))
                 self.inport += 1
-        logger.info('listening for clients on port {}...'.format(self.inport))
+        logger.info('listening for source clients on port {}...'.format(self.inport))
         self.portnumber.put({
             'in-port': self.inport,
         })
@@ -78,7 +78,7 @@ class OutsourcingServer(threading.Thread):
             else:
                 logger.debug('could not open port {}, trying with the next one'.format(self.outport))
                 self.outport += 1
-        logger.info('listening for verification servers on port {}...'.format(self.outport))
+        logger.info('listening for consumer clients on port {}...'.format(self.outport))
         self.portnumber.put({
             'out-port': self.outport,
         })
