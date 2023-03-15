@@ -322,7 +322,7 @@ class ManagementProtocolFactory(protocol.ServerFactory):
         self.mpcs_status = dict(zip(mpcs_names, [{'online': False} for _ in range(nmpcs)]))
 
 
-class CoordinationServer:
+class ManagementServer:
 
     def __init__(self, dbcon, **kwargs):
         self.dbcon = dbcon
@@ -333,4 +333,4 @@ class CoordinationServer:
         self.endpoint = endpoints.TCP4ServerEndpoint(reactor, AUTH_PORT)
         factory = ManagementProtocolFactory(self.dbcon, **self.kwargs)
         self.endpoint.listen(factory)
-        logger.info('coordination server started')
+        logger.info('management server started')

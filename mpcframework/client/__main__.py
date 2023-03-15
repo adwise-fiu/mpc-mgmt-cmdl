@@ -7,10 +7,10 @@ from ..storage import sqlitedb as db
 from ..network.client.client_registration_protocol import ClientRegistrationProtocol
 from ..network.client.mpc_request_protocol import MPCRequestProtocol
 
-logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s |%(levelname)-7s| %(name)s:%(message)s', level=logging.DEBUG)
 logger = logging.getLogger('ClientApplication')
 autoconnect = True
-ctrlchannel = None  # an instance of the coordination exchange protocol (for MPC job requests)
+ctrlchannel = None  # an instance of the management exchange protocol (for MPC job requests)
 
 mpc_params = {
     'nservers': 3,
@@ -96,7 +96,7 @@ while inloop:
         if authenticated:
             ctrlchannel.requestMpcJob(mpc_params)
         else:
-            print('\xabtype \'connect\' to authenticate to the coordination server first\xbb')
+            print('\xabtype \'connect\' to authenticate to the management server first\xbb')
 
     elif token == 'exit':
         exit_program()

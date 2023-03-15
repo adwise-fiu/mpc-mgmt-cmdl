@@ -2,7 +2,7 @@
 Multiparty Computation (MPC) Manager - entry program
 
 Runs two servers. A registration server for new participants (MPC servers and clients) and a
-coordination server that receives and process MPC request from clients, selects the MPC servers and
+management server that receives and process MPC request from clients, selects the MPC servers and
 distributes network authentication credentials for secure communication between clients and servers.
 
 Copyright (c) 2023, Oscar G. Bautista

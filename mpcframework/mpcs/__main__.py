@@ -7,7 +7,7 @@ from ..storage import sqlitedb as db
 from ..network.mpcs.mpcs_registration_protocol import MPCSRegistrationProtocol
 from ..network.mpcs.mpc_control_protocol import MPCControlProtocol
 
-logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s |%(levelname)-7s| %(name)s:%(message)s', level=logging.DEBUG)
 logger = logging.getLogger('MPCServerApplication')
 
 

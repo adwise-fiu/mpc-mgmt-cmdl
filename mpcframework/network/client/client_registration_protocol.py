@@ -55,7 +55,7 @@ class ClientRegistrationProtocol(NetworkProtocolBase):
         }
         self.sendData(request)
 
-        # send this client's information after prompt by the coordination server
+        # send this client's information after prompt by the management server
         response = self.receiveData()
         self.verifyResponseMessageIntegrity(response)
         status = response['response']
@@ -93,7 +93,7 @@ class ClientRegistrationProtocol(NetworkProtocolBase):
             )
             self.closeAndExit(1)
         self.setupSymmCipher(dh_shk, iv=self.nodeinfo.nonce[:16])
-        logger.info('generated DH shared key with coordination server')
+        logger.info('generated DH shared key with management server')
 
 
     def runAuthorizationExchange(self):

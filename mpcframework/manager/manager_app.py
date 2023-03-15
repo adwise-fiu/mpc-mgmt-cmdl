@@ -2,7 +2,7 @@
 Multiparty Computation (MPC) Manager Application
 
 Runs two servers. A registration server for new participants (MPC servers and clients) and a
-coordination server that receives and process MPC request from clients, selects the MPC servers and
+management server that receives and process MPC request from clients, selects the MPC servers and
 distributes network authentication credentials for secure communication between clients and servers.
 
 Copyright (c) 2023, Oscar G. Bautista
@@ -15,11 +15,11 @@ import threading
 
 from twisted.internet import reactor
 from ..tmnetwork.regs_protocol import RegistrationServer
-from ..tmnetwork.mgmt_protocol import CoordinationServer
+from ..tmnetwork.mgmt_protocol import ManagementServer
 from ..storage import sqliteutils as sqt
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(format='%(levelname)-7s| %(name)s:%(message)s', level=logging.DEBUG)
 logger = logging.getLogger('ManagerServerApplication')
 
 
@@ -37,7 +37,7 @@ class ManagerApp:
     def run(self):
         self.populateParticipants()
         self.runRegistrationServer()
-        self.runCoordinationServer()
+        self.runManagementServer()
         reactor.run()
         sqt.closeConnection(self.rodb)
 
@@ -60,6 +60,6 @@ class ManagerApp:
         self._regServer = RegistrationServer(dbcon=self.rwdb, nodeList=self.node_list)
         self._regServer.start()
 
-    def runCoordinationServer(self):
-        self._authServer = CoordinationServer(dbcon=self.rodb, nodeList=self.node_list)
+    def runManagementServer(self):
+        self._authServer = ManagementServer(dbcon=self.rodb, nodeList=self.node_list)
         self._authServer.start()

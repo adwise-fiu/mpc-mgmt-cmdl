@@ -52,15 +52,15 @@ class MPCRequestProtocol(ClientAuthenticationProtocol):
                 msg['execution'] = 'abort'
             self.sendData(msg)
         else:
-            logger.warning('unkown message type from the coordination server\n')
+            logger.warning('unkown message type from the management server\n')
 
     def listenToServer(self):
-        logger.info('listening to the coordination server...')
+        logger.info('listening to the management server...')
         while True:
             msg = self.receiveData()
             descriptor = msg.pop('m-type', '')
             if descriptor == 'datarequest':
-                logger.info('received metadata request from the coordination server (job: {})'
+                logger.info('received metadata request from the management server (job: {})'
                             .format(msg.get('job-id', ''))
                 )
                 if 'fixp' in msg and type(msg['fixp']) == int:
@@ -106,7 +106,9 @@ class MPCRequestProtocol(ClientAuthenticationProtocol):
                     logger.debug('received credentials to authenticate to MPC server {} ({})'
                                 .format(srvrid, srvraddr)
                     )
-                # print('all server\'s connection information received:\n{}'.format(current_job))
+                print('\xaball MPC server\'s connection credentials have been received (job {})\xbb'
+                      .format(jobId)
+                )
                 outsourcingNetwork = PmpNetwork.setup(self.nodeinfo['nodename'], mpcs_info)
                 response = {
                     'm-type': 'status',
@@ -119,5 +121,5 @@ class MPCRequestProtocol(ClientAuthenticationProtocol):
                 self.sendData(response)
 
             elif msg == {}:
-                logger.info('stopped listening to the coordination server\n')
+                logger.info('stopped listening to the management server\n')
                 break

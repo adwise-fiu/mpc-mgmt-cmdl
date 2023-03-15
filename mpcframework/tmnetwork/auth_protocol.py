@@ -59,7 +59,7 @@ class AuthenticationProtocol(basic.NetstringReceiver):
             return
 
         if self.authenticated:
-            response = self.messageReceived(msg)  # Processed by the coordination protocol
+            response = self.messageReceived(msg)  # Processed by the management protocol
         else:
             response = self.process_authentication_msg(msg)
 

@@ -15,7 +15,7 @@ class RegistrationProtocol(NetworkProtocolBase):
 
     def __init__(self):
         super().__init__()
-        self.remotetype = 'coordination'
+        self.remotetype = 'management'
         random_generator = Random.new().read
         self.nodeinfo = SimpleNamespace(
             name=None,
@@ -49,7 +49,7 @@ class RegistrationProtocol(NetworkProtocolBase):
         }
         self.sendData(request)
 
-        # send this server's information after prompt by the coordination server
+        # send this server's information after prompt by the management server
         bytestring = self.receiveData(binary=True)
         response = self.rsa_cipher.decrypt(bytestring)
         self.verifyResponseMessageIntegrity(response)
@@ -68,7 +68,7 @@ class RegistrationProtocol(NetworkProtocolBase):
         self.nodeinfo.nonce = response['nonce']
         self.remoteserver.port = response['auth_port']
         self.setupSymmCipher(self.nodeinfo.symm_k, iv=self.nodeinfo.nonce[:16])
-        logger.info('established secure communication with the coordination server')
+        logger.info('established secure communication with the management server')
         requiredattrs = response['attributes']
         missing = set(requiredattrs.keys()) - set(self.nodeinfo.attrs.keys())
         if missing:

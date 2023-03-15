@@ -22,7 +22,7 @@ class MPCControlProtocol(MPCSAuthenticationProtocol):
         return self.execute()
 
     def listenToServer(self):
-        logger.info('listening to the coordination server...')
+        logger.info('listening to the management server...')
         while True:
             msg =  self.receiveData()
             descriptor = msg.pop('m-type', '')
@@ -59,7 +59,7 @@ class MPCControlProtocol(MPCSAuthenticationProtocol):
                     logger.info('receiving MPC server identities for job {}'.format(jobId))
                     try:
                         self.mpc_ntwk_set['myId'] = msg['id']
-                        self.mpc_ntwk_set['n-peers'] = npeers = msg['n-peers']
+                        self.mpc_ntwk_set['npeers'] = npeers = msg['n-peers']
                     except KeyError as e:
                         logger.error('missing parameter: {}'.format(e))
                 else:
@@ -73,11 +73,11 @@ class MPCControlProtocol(MPCSAuthenticationProtocol):
                         peers[_id] = peer_info
                     except KeyError as e:
                         logger.error('missing key: {}'.format(e))
-                print('all MPC peer\'s identities received')
+                print('\xaball MPC peer\'s identities have been received\xbb')
                 response = {}
 
             elif msg == {}:
-                logger.info('stopped listening to the coordination server\n')
+                logger.info('stopped listening to the management server\n')
                 break
 
             if response:

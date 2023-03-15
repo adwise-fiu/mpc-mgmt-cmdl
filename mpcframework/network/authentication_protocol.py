@@ -11,7 +11,7 @@ class AuthenticationProtocol(NetworkProtocolBase):
     def __init__(self, identity):
         super().__init__()
         self.nodeinfo = identity
-        self.remotetype = 'coordination'
+        self.remotetype = 'management'
         self.serveraddr = ('localhost', identity['server_port'])
         # self.serv_addr_str = ':'.join([self.serveraddr[0], str(self.serveraddr[1])])
         self.aes_cipher = AES_cipher(identity['symm_k'], iv=identity['nonce'][:16])
@@ -59,8 +59,8 @@ class AuthenticationProtocol(NetworkProtocolBase):
         response = self.receiveData()
         status = response.get('response', '')
         if status == 'complete':
-            logger.info('authentication to the coordination server complete!')
+            logger.info('authentication to the management server complete!')
             return True
         else:
-            logger.warning('authentication to coordination server failed')
+            logger.warning('authentication to the management server failed')
             return False
